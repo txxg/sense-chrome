@@ -214,12 +214,14 @@
       // Reset autocomplete values
        clear();
 
+       /*
       callES(currentServer, "_mapping", "GET", null, function (data, status, xhr) {
          loadMappings(data);
       });
        callES(currentServer, "_aliases", "GET", null, function (data, status, xhr) {
           loadAliases(data);
        });
+       */
    }
 
    function notifyServerChange(newServer) {
