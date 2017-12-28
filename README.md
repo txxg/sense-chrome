@@ -20,6 +20,7 @@ To use this fork (from https://github.com/elastic/sense) :
 
 #### Change from the original extension
 
+- Add "instances" config function.
 - Deleting Google Analytics
 - Disable fetch mapping or alias to ES
 - Add "filter" in autocomplete

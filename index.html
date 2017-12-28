@@ -10,21 +10,24 @@
 <body>
 <div class="navbar">
     <div class="navbar-inner">
-        <span class="brand" id="server_label">Server</span>
-
+        <div class="btn-group pull-left">
+            <a id="selected_cluster"  class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">
+                Clusters
+                <span class="caret"></span>
+            </a>
+            <ul id="sel_cluster"  class="dropdown-menu"></ul>
+        </div>
         <form class="navbar-form pull-left">
-            <input id="es_server" type="text" class="span5" value="localhost:9200"/>
+            &nbsp;&nbsp;<input id="es_server" type="text" class="span5" value="localhost:9200"/>
         </form>
         <button class="pull-left btn btn-link"><span id="notification" style="visibility: hidden"
                                                      class="label label-info"></span></button>
-        <button id="help_btn" class="btn pull-right-btn" data-toggle="modal" data-target="#help_popup">Help</button>
-        <button id="history_btn" class="btn pull-right-btn" data-toggle="modal" data-target="#history_popup">History
-        </button>
-        <button id="saved_btn" class="btn pull-right-btn" data-toggle="modal" data-target="#saved_popup">Saved query
-        </button>
-        <button id="export_csv" class="btn btn-info hide pull-right-btn">Export source in CSV
-        </button>
 
+        <button id="help_btn" class="btn pull-right-btn" data-toggle="modal" data-target="#help_popup">Help</button>
+        <button id="history_btn" class="btn pull-right-btn" data-toggle="modal" data-target="#history_popup">History</button>
+        <button id="saved_btn" class="btn pull-right-btn" data-toggle="modal" data-target="#saved_popup">Saved query</button>
+        <button id="export_csv" class="btn btn-info hide pull-right-btn">Export source in CSV</button>
+        <button id="ins_btn" class="btn pull-right-btn" data-toggle="modal" data-target="#ins_popup">Instances</button>
     </div>
 </div>
 <div id="main" class="container-fluid">
@@ -51,7 +54,7 @@
 </div>
 
 
-<div id="help_popup" class="modal hide fade" data-keyboard="true">
+<div id="help_popup" class="modal hide" data-keyboard="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Help</h3>
@@ -97,7 +100,7 @@
         <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Got it</a>
     </div>
 </div>
-<div id="history_popup" class="modal hide fade" data-keyboard="true">
+<div id="history_popup" class="modal hide" data-keyboard="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>History</h3>
@@ -115,7 +118,7 @@
     </div>
 </div>
 
-<div id="saved_popup" class="modal hide fade" data-keyboard="true">
+<div id="saved_popup" class="modal hide" data-keyboard="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Saved query</h3>
@@ -131,7 +134,21 @@
     </div>
 </div>
 
-<div id="welcome_popup" class="modal hide fade" data-keyboard="true" data-remote="welcome.html">
+<div id="ins_popup" class="modal hide" data-keyboard="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Saved Instances</h3>
+    </div>
+    <div class="modal-body">
+        <!--<textarea rows="3"></textarea>-->
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Save</a>
+    </div>
+</div>
+
+<div id="welcome_popup" class="modal hide" data-keyboard="true" data-remote="welcome.html">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Welcome to Sense</h3>
@@ -172,5 +189,6 @@
 <script src="src/mappings.js" type="text/javascript" charset="utf-8"></script>
 <script src="src/history.js" type="text/javascript" charset="utf-8"></script>
 <script src="src/saved.js" type="text/javascript" charset="utf-8"></script>
+<script src="src/instances.js" type="text/javascript" charset="utf-8"></script>
 <script src="src/autocomplete.js" type="text/javascript" charset="utf-8"></script>
 </html>

@@ -96,6 +96,11 @@ body {
     margin-top: 0;
 }
 
+#ins_popup {
+    width: 50%;
+    height: 50%;
+}
+
 #history_popup .modal-body {
 }
 
@@ -106,14 +111,14 @@ body {
     right: 0;
 }
 
-#history_popup .modal-footer, #saved_popup .modal-footer {
+#history_popup .modal-footer, #saved_popup .modal-footer, #ins_popup .modal-footer {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
 }
 
-#history_popup .nav, #saved_popup .nav  {
+#history_popup .nav, #saved_popup .nav {
     position: absolute;
     width: 400px;
     left: 0;
@@ -169,6 +174,16 @@ body {
 #history_viewer, #saved_viewer {
     position: absolute;
     left: 430px;
+    right: 0;
+    margin-right: 9px;
+    top: 60px;
+    bottom: 70px;
+}
+
+#saved_ins {
+    position: absolute;
+    witdh: 100%;
+    left: 0px;
     right: 0;
     margin-right: 9px;
     top: 60px;

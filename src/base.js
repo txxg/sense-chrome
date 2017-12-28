@@ -501,6 +501,7 @@ function init() {
 
     sense.history.init();
     sense.saved.init();
+    sense.ins.init();
     sense.autocomplete.init();
 
     $("#send").tooltip();
