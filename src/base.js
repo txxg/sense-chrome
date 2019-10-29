@@ -68,6 +68,7 @@ function callES(server, url, method, data, successCallback, completeCallback) {
         url: url,
         data: method == "GET" ? null : data,
         contentType: 'application/json',
+		headers: method == "GET" ? null : { "Content-Type": "application/json" },
 //      xhrFields: {
 //            withCredentials: true
 //      },
@@ -226,6 +227,66 @@ function copyAsCURL() {
 
 copyAsCURL = autoRetryIfTokenizing(copyAsCURL, true);
 
+function copyAsPhp() {
+    var req = sense.utils.getCurrentRequest();
+    if (!req) return;
+
+    // parsing URL for get index and type
+
+    if(req.url.charAt(0) == '/') {
+        req.url = req.url.slice(1);
+    }
+    var data = req.url.split('/');
+    var index = data[0];
+    var type = '';
+    if(data[1].slice(1) !== '_')
+        type = data[1];
+
+    var php = '[' + "\n\t" + '\'index\' => \'' + index + '\',' + "\n\t";
+    if(type !== '')
+        php = php + '\'type\' => \'' + type + '\',' + "\n\t";
+
+    php = php + '\'body\' => ';
+
+    if (req.data && req.data.length) {
+        php += req.data.join("\n").replace(/\n/g, '\n\t').replace(/"/g, '\'').replace(/{/g, '[').replace(/},?/g, '],').replace(/:/g, ' =>')+'\n';
+        if (req.data.length > 1) php += "\t"; // end with a new line
+    }
+    php = php + '];';
+
+    //console.log(php);
+    copyToClipboard(php);
+
+}
+
+
+
+function copyForElasticdump() {
+    var req = sense.utils.getCurrentRequest();
+    if (!req) return;
+
+    if(req.url.charAt(0) == '/') {
+        req.url = req.url.slice(1);
+    }
+    var data = req.url.split('/');
+    var index = data[0];
+    var type = '';
+    if(data[1].slice(1) !== '_')
+        type = data[1];
+
+    var es_server = $("#es_server").val(),
+        es_url = req.url,
+        es_method = req.method,
+        es_data = req.data;
+
+    var url = constructESUrl(es_server, index + '/' + type);
+
+    var elasticdump = 'elasticdump --input=' + url + ' --output=./' + index + '_' + type + '_' + (new Date()).getTime()
+        + '.json --type=data --searchBody=\'' + reformatData(es_data, 0).data + '\' --limit=1000';
+
+    copyToClipboard(elasticdump);
+
+}
 
 function handleCURLPaste(text) {
     var curlInput = sense.curl.parseCURL(text);
@@ -389,6 +450,26 @@ function moveToNextRequestEdge() {
 
 moveToNextRequestEdge = autoRetryIfTokenizing(moveToNextRequestEdge);
 
+function checkVersion() {
+    var hashLocal = '';
+        fetch('.git/FETCH_HEAD')
+        .then(response => response.text())
+        .then(function(text) {
+            hashLocal = text.split("\t")[0];
+            console
+
+            fetch('https://api.github.com/repos/StephaneBour/sense-chrome/commits')
+                .then(response => response.json())
+                .then(function(github) {
+                    if(github[0].sha !== hashLocal) {
+                        document.getElementById('new_version').style.display = 'block';
+                    }
+                });
+        });
+}
+
+moveToNextRequestEdge = autoRetryIfTokenizing(checkVersion);
+
 function init() {
 
     sense.editor = ace.edit("editor");
@@ -466,7 +547,6 @@ function init() {
 
     sense.editor.getSession().on("changeScrollTop", updateEditorActionsBar);
 
-
     sense.output = ace.edit("output");
     sense.output.getSession().setMode("ace/mode/json");
     sense.output.getSession().setFoldStyle('markbeginend');
@@ -503,7 +583,7 @@ function init() {
     sense.saved.init();
     sense.ins.init();
     sense.autocomplete.init();
-
+    checkVersion();
     $("#send").tooltip();
     $("#send").click(function () {
         submitCurrentRequestToES();
@@ -512,6 +592,16 @@ function init() {
 
     $("#copy_as_curl").click(function (e) {
         copyAsCURL();
+        e.preventDefault();
+    });
+
+    $("#copy_as_php").click(function (e) {
+        copyAsPhp();
+        e.preventDefault();
+    });
+
+    $("#copy_for_elasticdump").click(function (e) {
+        copyForElasticdump();
         e.preventDefault();
     });
 
