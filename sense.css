@@ -12,6 +12,11 @@ body {
     margin-right: 0;
 }
 
+#sel_cluster {
+    max-height: 90vh;
+    overflow: auto;
+}
+
 #es_method {
     width: 100px;
 }

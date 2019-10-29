@@ -18,5 +18,5 @@
    "name": "Sense (Nelo Fork)",
    "permissions": [ "tabs", "clipboardWrite", "http://*/*", "https://*/*", "storage", "webRequest", "webRequestBlocking" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.1"
+   "version": "0.2"
 }
